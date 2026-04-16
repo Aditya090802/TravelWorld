@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pro Contact</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#1f1c2c,#928dab);
+}
+
+/* Card */
+.card{
+    width:350px;
+    padding:30px;
+    border-radius:15px;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.2);
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+h2{
+    text-align:center;
+    color:#fff;
+    margin-bottom:20px;
+}
+
+/* Inputs */
+.input-box{
+    position:relative;
+    margin-bottom:20px;
+}
+
+.input-box input,
+.input-box textarea{
+    width:100%;
+    padding:12px 40px;
+    border-radius:10px;
+    border:none;
+    outline:none;
+    background:rgba(255,255,255,0.2);
+    color:#fff;
+}
+
+.input-box i{
+    position:absolute;
+    left:10px;
+    top:12px;
+    color:#fff;
+}
+
+.input-box label{
+    position:absolute;
+    left:40px;
+    top:12px;
+    color:#ddd;
+    transition:0.3s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label,
+.input-box textarea:focus ~ label,
+.input-box textarea:valid ~ label{
+    top:-8px;
+    font-size:11px;
+    color:#00c6ff;
+}
+
+/* Button */
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(45deg,#00c6ff,#0072ff);
+    color:#fff;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    box-shadow:0 0 20px #00c6ff;
+    transform:translateY(-2px);
+}
+
+/* Back */
+a{
+    display:block;
+    text-align:center;
+    margin-top:10px;
+    color:#fff;
+    text-decoration:none;
+}
+
+/* Popup */
+.popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+    visibility:hidden;
+    transition:0.3s;
+}
+
+.popup.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.popup-content{
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(15px);
+    padding:30px;
+    border-radius:15px;
+    text-align:center;
+    color:#fff;
+    transform:scale(0.7);
+    transition:0.3s;
+}
+
+.popup.active .popup-content{
+    transform:scale(1);
+}
+
+.check{
+    font-size:40px;
+    color:#00ffae;
+    margin-bottom:10px;
+    animation:pop 0.5s ease;
+}
+
+@keyframes pop{
+    0%{transform:scale(0);}
+    100%{transform:scale(1);}
+}
+
+.popup button{
+    margin-top:10px;
+    padding:8px 20px;
+    border:none;
+    border-radius:8px;
+    background:#00c6ff;
+    color:#fff;
+    cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Contact Me</h2>
+
+    <form onsubmit="sendMsg(event)">
+
+        <div class="input-box">
+            <i class="fa fa-user"></i>
+            <input type="text" required>
+            <label>Name</label>
+        </div>
+
+        <div class="input-box">
+            <i class="fa fa-envelope"></i>
+            <input type="email" required>
+            <label>Email</label>
+        </div>
+
+        <div class="input-box">
+            <i class="fa fa-comment"></i>
+            <textarea rows="3" required></textarea>
+            <label>Message</label>
+        </div>
+
+        <button type="submit">Send Message</button>
+    </form>
+
+    <a href="index.html">⬅ Back</a>
+</div>
+
+<!-- Popup -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <div class="check">✔</div>
+        <h3>Message Sent!</h3>
+        <p>Your message has been successfully sent 🚀</p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+</div>
+
+<script>
+function sendMsg(e){
+    e.preventDefault();
+
+    // Show popup
+    document.getElementById("popup").classList.add("active");
+
+    // Play sound
+    document.getElementById("successSound").play();
+
+    // Auto close after 3 seconds
+    setTimeout(() => {
+        closePopup();
+    }, 3000);
+}
+
+function closePopup(){
+    document.getElementById("popup").classList.remove("active");
+}
+</script>
+<audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+
+</body>
+</html>
